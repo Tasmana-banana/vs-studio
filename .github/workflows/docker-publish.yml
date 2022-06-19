@@ -91,7 +91,7 @@ jobs:
       #   run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
 
   deploy:
-    
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -116,6 +116,3 @@ jobs:
           inventory: |
             [vs-code]
             ${{secrets.HOST}}
-          env:
-            ANSIBLE_HOST_KEY_CHECKING: 'false'
-            ANSIBLE_DEPRECATION_WARNINGS: 'false'
