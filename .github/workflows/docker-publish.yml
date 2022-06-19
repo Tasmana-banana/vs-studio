@@ -72,7 +72,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
-          context: Dokerfiles/vs-studio
+          context: Dokerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -106,15 +106,16 @@ jobs:
 
       
       - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+        uses: arillso/action.playbook@master
         with:
           # Required, playbook filepath
           playbook: ansible/playbooks/vs-code.yaml
-          # Optional, directory where playbooks live
-          directory: ./
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           # Optional, literal inventory file contents
           inventory: |
             [vs-code]
             ${{secrets.HOST}}
+          env:
+            ANSIBLE_HOST_KEY_CHECKING: 'false'
+            ANSIBLE_DEPRECATION_WARNINGS: 'false'
