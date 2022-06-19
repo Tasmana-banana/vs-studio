@@ -1,0 +1,6 @@
+---
+
+- hosts: 'vs-code'
+  become: true
+  roles:
+    - 'vs-code'

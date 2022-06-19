@@ -1,0 +1,17 @@
+---
+
+- name: 'Start a container'
+  community.docker.docker_container:
+    name: 'vs-code-tasmana'
+    image: 'docker pull ghcr.io/tasmana-banana/vs-code:main'
+    state: 'started'
+    restart: yes
+    ports:
+      - '8080:8080'
+    volumes:
+      - '$HOME/.config:/home/coder/.config'
+      - '$HOME:/home/tasmana'
+    user:
+      - '(id -u):$(id -g)'
+    env:
+      DOCKER_USER: '$USER'

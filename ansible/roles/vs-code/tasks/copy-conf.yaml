@@ -1,0 +1,9 @@
+---
+
+- name: 'Copy file config'
+  ansible.builtin.copy:
+    src: 'files/config.yaml'
+    dest: '$HOME/.config/code-server/config.yaml'
+    owner: 'tasmana'
+    group: 'tasmana'
+    mode: '0664'
