@@ -106,13 +106,10 @@ jobs:
 
       
       - name: Run playbook
-        uses: arillso/action.playbook@master
+        uses: dawidd6/action-ansible-playbook@v2.5.0
         with:
           # Required, playbook filepath
           playbook: ansible/playbooks/vs-code.yaml
-          # Optional, SSH private key
+          directory: ./
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
-          inventory: |
-            [vs-code]
-            ${{secrets.HOST}}
+          inventory: ${{secrets.ANSIBLE_INVENTORY}}
