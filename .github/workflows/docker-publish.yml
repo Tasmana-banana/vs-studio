@@ -113,6 +113,14 @@ jobs:
           pip install ansible==2.9.2 requests
           pip install docker==4.4.4
 
+      - name: set ansible config secrets
+        env:
+          DO_SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir .ssh
+          echo "$DO_SSH_KEY" > .ssh/id_rsa
+          chmod 600 .ssh/id_rsa
+
       - name: Run playbook
         run: |
-          ansible-playbook --private-key ${{secrets.SSH_PRIVATE_KEY}} -i ${{secrets.ANSIBLE_INVENTORY}} ansible/playbooks/vs-code.yaml
+          ansible-playbook --private-key .ssh/id_rsa -i ${{secrets.ANSIBLE_INVENTORY}} ansible/playbooks/vs-code.yaml
