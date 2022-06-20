@@ -116,11 +116,12 @@ jobs:
       - name: set ansible config secrets
         env:
           DO_SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ANSIBLE_INVENTORY: ${{secrets.ANSIBLE_INVENTORY}}
         run: |
           mkdir .ssh
           echo "$DO_SSH_KEY" > .ssh/id_rsa
           chmod 600 .ssh/id_rsa
-
+          echo "$ANSIBLE_INVENTORY" > inventory
       - name: Run playbook
         run: |
-          ansible-playbook --private-key .ssh/id_rsa -i ${{secrets.ANSIBLE_INVENTORY}} ansible/playbooks/vs-code.yaml
+          ansible-playbook --private-key .ssh/id_rsa -i inventory ansible/playbooks/vs-code.yaml
