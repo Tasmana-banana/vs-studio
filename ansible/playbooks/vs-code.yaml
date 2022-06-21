@@ -3,4 +3,4 @@
 - hosts: 'vs-server'
   become: true
   roles:
-    - vs-code
+    - role: 'vs-code'
